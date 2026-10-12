@@ -38,7 +38,7 @@ create table if not exists public.provider_profiles (
   completed_projects integer not null default 0 check (completed_projects >= 0),
   hourly_rate numeric(12, 2) check (hourly_rate is null or hourly_rate >= 0),
   daily_rate numeric(12, 2) check (daily_rate is null or daily_rate >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   service_area text not null,
   availability text not null check (availability in ('Available Today', 'Available This Week', 'Booked (Next Week)', 'Unavailable')) default 'Available Today',
   verified boolean not null default false,
@@ -59,7 +59,7 @@ create table if not exists public.service_categories (
   popular boolean not null default false,
   base_price_unit text not null default 'hr',
   indicative_starting_price numeric(12, 2) not null default 0.00 check (indicative_starting_price >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   created_at timestamptz not null default now()
 );
 
@@ -80,7 +80,7 @@ create table if not exists public.service_requests (
   scheduled_timeslot text not null,
   requirements text,
   estimated_budget numeric(12, 2) check (estimated_budget is null or estimated_budget >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   status text not null check (status in ('open', 'matched', 'completed', 'cancelled')) default 'open',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -105,7 +105,7 @@ create table if not exists public.projects (
   budget_estimated numeric(12, 2) not null check (budget_estimated >= 0),
   agreed_quotation numeric(12, 2) not null check (agreed_quotation >= 0),
   amount_spent numeric(12, 2) not null default 0.00 check (amount_spent >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   progress_percentage integer not null default 0 check (progress_percentage >= 0 and progress_percentage <= 100),
   assigned_workers_count integer not null default 1 check (assigned_workers_count >= 1),
   status text not null check (status in ('Planning', 'In Progress', 'Review', 'Completed', 'On Hold', 'Cancelled')) default 'Planning',
@@ -140,7 +140,7 @@ create table if not exists public.quotations (
   duration_estimate text not null,
   warranty_terms text,
   total_price numeric(12, 2) not null check (total_price >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   status text not null check (status in ('draft', 'submitted', 'shortlisted', 'accepted', 'rejected')) default 'submitted',
   created_at timestamptz not null default now(),
   check (project_id is not null or service_request_id is not null)
@@ -166,7 +166,7 @@ create table if not exists public.bookings (
   duration_value integer not null check (duration_value > 0),
   duration_unit text not null check (duration_unit in ('hours', 'days')),
   total_price numeric(12, 2) not null check (total_price >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   status text not null check (status in ('Pending', 'Scheduled', 'In Progress', 'Completed', 'Cancelled')) default 'Scheduled',
   live_step integer not null default 1 check (live_step between 1 and 5),
   special_instructions text,
@@ -187,7 +187,7 @@ create table if not exists public.project_milestones (
   status text not null check (status in ('Upcoming', 'In Progress', 'Completed')) default 'Upcoming',
   percentage integer not null default 0 check (percentage >= 0 and percentage <= 100),
   payout_amount numeric(12, 2) not null default 0.00 check (payout_amount >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   is_paid boolean not null default false,
   paid_at timestamptz,
   created_at timestamptz not null default now(),
@@ -219,7 +219,7 @@ create table if not exists public.material_items (
   name text not null,
   quantity text not null,
   estimated_cost numeric(12, 2) not null default 0.00 check (estimated_cost >= 0),
-  currency varchar(3) not null default 'USD',
+  currency varchar(3) not null default 'INR',
   supplier text,
   status text not null check (status in ('Requisitioned', 'Ordered', 'Delivered', 'Installed')) default 'Requisitioned',
   created_at timestamptz not null default now(),
@@ -326,19 +326,24 @@ returns boolean language sql security definer as $$
 $$;
 
 -- PROFILES
+drop policy if exists "Public can view basic profiles" on public.profiles;
 create policy "Public can view basic profiles" on public.profiles
   for select using (true);
 
+drop policy if exists "Users can update own profile" on public.profiles;
 create policy "Users can update own profile" on public.profiles
   for update using (auth.uid() = id);
 
+drop policy if exists "Users can insert own profile" on public.profiles;
 create policy "Users can insert own profile" on public.profiles
   for insert with check (auth.uid() = id);
 
 -- PROVIDER PROFILES
+drop policy if exists "Anyone can browse provider profiles" on public.provider_profiles;
 create policy "Anyone can browse provider profiles" on public.provider_profiles
   for select using (true);
 
+drop policy if exists "Providers can update own provider profile" on public.provider_profiles;
 create policy "Providers can update own provider profile" on public.provider_profiles
   for update using (
     exists (
@@ -347,26 +352,32 @@ create policy "Providers can update own provider profile" on public.provider_pro
     ) or public.is_admin()
   );
 
+drop policy if exists "Providers can insert provider profile" on public.provider_profiles;
 create policy "Providers can insert provider profile" on public.provider_profiles
   for insert with check (auth.uid() = profile_id or public.is_admin());
 
 -- SERVICE CATEGORIES
+drop policy if exists "Anyone can read categories" on public.service_categories;
 create policy "Anyone can read categories" on public.service_categories
   for select using (true);
 
+drop policy if exists "Only admin can modify categories" on public.service_categories;
 create policy "Only admin can modify categories" on public.service_categories
   for all using (public.is_admin());
 
 -- SERVICE REQUESTS
+drop policy if exists "Customers can manage own service requests" on public.service_requests;
 create policy "Customers can manage own service requests" on public.service_requests
   for all using (auth.uid() = customer_id or public.is_admin());
 
+drop policy if exists "Providers can view open service requests" on public.service_requests;
 create policy "Providers can view open service requests" on public.service_requests
   for select using (
     status = 'open' or auth.uid() = customer_id or public.is_admin()
   );
 
 -- PROJECTS
+drop policy if exists "Owners and contractors can view projects" on public.projects;
 create policy "Owners and contractors can view projects" on public.projects
   for select using (
     auth.uid() = customer_id or 
@@ -381,9 +392,11 @@ create policy "Owners and contractors can view projects" on public.projects
     public.is_admin()
   );
 
+drop policy if exists "Customers can create projects" on public.projects;
 create policy "Customers can create projects" on public.projects
   for insert with check (auth.uid() = customer_id or public.is_admin());
 
+drop policy if exists "Project participants can update projects" on public.projects;
 create policy "Project participants can update projects" on public.projects
   for update using (
     auth.uid() = customer_id or
@@ -395,6 +408,7 @@ create policy "Project participants can update projects" on public.projects
   );
 
 -- PROJECT MEMBERS
+drop policy if exists "Project members view access" on public.project_members;
 create policy "Project members view access" on public.project_members
   for select using (
     profile_id = auth.uid() or
@@ -405,6 +419,7 @@ create policy "Project members view access" on public.project_members
   );
 
 -- QUOTATIONS
+drop policy if exists "Customers and providers can view project quotations" on public.quotations;
 create policy "Customers and providers can view project quotations" on public.quotations
   for select using (
     exists (
@@ -421,6 +436,7 @@ create policy "Customers and providers can view project quotations" on public.qu
     public.is_admin()
   );
 
+drop policy if exists "Providers can submit quotations" on public.quotations;
 create policy "Providers can submit quotations" on public.quotations
   for insert with check (
     exists (
@@ -430,6 +446,7 @@ create policy "Providers can submit quotations" on public.quotations
   );
 
 -- BOOKINGS
+drop policy if exists "Users can view own bookings" on public.bookings;
 create policy "Users can view own bookings" on public.bookings
   for select using (
     auth.uid() = customer_id or
@@ -440,9 +457,11 @@ create policy "Users can view own bookings" on public.bookings
     public.is_admin()
   );
 
+drop policy if exists "Customers can insert bookings" on public.bookings;
 create policy "Customers can insert bookings" on public.bookings
   for insert with check (auth.uid() = customer_id or public.is_admin());
 
+drop policy if exists "Participants can update bookings" on public.bookings;
 create policy "Participants can update bookings" on public.bookings
   for update using (
     auth.uid() = customer_id or
@@ -454,6 +473,7 @@ create policy "Participants can update bookings" on public.bookings
   );
 
 -- PROJECT SUB-ENTITIES (Milestones, Tasks, Materials, Photos)
+drop policy if exists "Project members can read milestones" on public.project_milestones;
 create policy "Project members can read milestones" on public.project_milestones
   for select using (
     exists (
@@ -468,6 +488,7 @@ create policy "Project members can read milestones" on public.project_milestones
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can update milestones" on public.project_milestones;
 create policy "Project members can update milestones" on public.project_milestones
   for all using (
     exists (
@@ -482,6 +503,7 @@ create policy "Project members can update milestones" on public.project_mileston
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can read tasks" on public.project_tasks;
 create policy "Project members can read tasks" on public.project_tasks
   for select using (
     exists (
@@ -496,6 +518,7 @@ create policy "Project members can read tasks" on public.project_tasks
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can manage tasks" on public.project_tasks;
 create policy "Project members can manage tasks" on public.project_tasks
   for all using (
     exists (
@@ -510,6 +533,7 @@ create policy "Project members can manage tasks" on public.project_tasks
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can read materials" on public.material_items;
 create policy "Project members can read materials" on public.material_items
   for select using (
     exists (
@@ -524,6 +548,7 @@ create policy "Project members can read materials" on public.material_items
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can update materials" on public.material_items;
 create policy "Project members can update materials" on public.material_items
   for all using (
     exists (
@@ -538,6 +563,7 @@ create policy "Project members can update materials" on public.material_items
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can read photos" on public.project_photos;
 create policy "Project members can read photos" on public.project_photos
   for select using (
     exists (
@@ -552,6 +578,7 @@ create policy "Project members can read photos" on public.project_photos
     ) or public.is_admin()
   );
 
+drop policy if exists "Project members can insert photos" on public.project_photos;
 create policy "Project members can insert photos" on public.project_photos
   for insert with check (
     exists (
@@ -567,9 +594,11 @@ create policy "Project members can insert photos" on public.project_photos
   );
 
 -- REVIEWS
+drop policy if exists "Anyone can read reviews" on public.reviews;
 create policy "Anyone can read reviews" on public.reviews
   for select using (true);
 
+drop policy if exists "Verified customers can insert reviews" on public.reviews;
 create policy "Verified customers can insert reviews" on public.reviews
   for insert with check (
     auth.uid() = author_id and
@@ -586,13 +615,16 @@ create policy "Verified customers can insert reviews" on public.reviews
   );
 
 -- NOTIFICATIONS
+drop policy if exists "Users read own notifications" on public.notifications;
 create policy "Users read own notifications" on public.notifications
   for select using (recipient_id = auth.uid());
 
+drop policy if exists "Users update own notifications" on public.notifications;
 create policy "Users update own notifications" on public.notifications
   for update using (recipient_id = auth.uid());
 
 -- MESSAGES
+drop policy if exists "Project participants can view messages" on public.messages;
 create policy "Project participants can view messages" on public.messages
   for select using (
     exists (
@@ -607,6 +639,7 @@ create policy "Project participants can view messages" on public.messages
     ) or public.is_admin()
   );
 
+drop policy if exists "Project participants can send messages" on public.messages;
 create policy "Project participants can send messages" on public.messages
   for insert with check (
     sender_id = auth.uid() and
@@ -649,13 +682,18 @@ create trigger on_auth_user_created
 -- =====================================================================
 insert into public.service_categories (id, name, description, icon_name, popular, base_price_unit, indicative_starting_price, currency)
 values
-  ('labour', 'Labour & Helpers', 'Daily construction labour, helpers and site assistants', 'Users', true, 'day', 45.00, 'USD'),
-  ('contractors', 'Construction Contractors', 'Licensed general building contractors for turnkey builds', 'HardHat', true, 'project', 15000.00, 'USD'),
-  ('architects', 'Architects & Engineers', 'Floor plans, 3D structural models and structural certifications', 'Compass', true, 'sqft', 2.50, 'USD'),
-  ('plumbing', 'Plumbing', 'Pipe fitting, sanitization, leak repairs and water systems', 'Wrench', true, 'hr', 40.00, 'USD'),
-  ('electrical', 'Electrical', 'Complete wiring, panel upgrades, fixtures and safety checks', 'Zap', true, 'hr', 45.00, 'USD'),
-  ('painting', 'Painting & Finishing', 'Interior and exterior premium wall coatings and waterproofing', 'Paintbrush', true, 'sqft', 1.20, 'USD'),
-  ('carpentry', 'Carpentry & Millwork', 'Custom furniture, framing, doors, cabinetry and woodwork', 'Hammer', false, 'hr', 42.00, 'USD'),
-  ('renovation', 'Renovation & Interiors', 'Modular kitchens, bathroom remodels and whole-home overhauls', 'Sparkles', true, 'project', 4500.00, 'USD'),
-  ('materials', 'Building Materials', 'Cement, aggregate, steel reinforcements and finishing goods', 'Truck', false, 'unit', 120.00, 'USD')
-on conflict (id) do nothing;
+  ('labour', 'Labour & Helpers', 'Skilled masons (Raj Mistry), daily helpers (Beldar), and site loading crews', 'HardHat', true, 'day', 550.00, 'INR'),
+  ('contractors', 'Construction Contractors', 'Turnkey builders, structural civil engineers & general contractors across India', 'Building2', true, 'sqft', 1550.00, 'INR'),
+  ('architects', 'Architects & Engineers', 'Vastu-compliant blueprint drafting, 3D elevation, structural stability & municipal sanctions', 'Compass', true, 'sqft', 35.00, 'INR'),
+  ('plumbing', 'Plumbing', 'Astral CPVC piping, bathroom sanitary fixtures, drainage & overhead tank installation', 'Wrench', true, 'visit', 450.00, 'INR'),
+  ('electrical', 'Electrical', 'Concealed copper wiring, MCB distribution board, smart switches & inverter tie-in', 'Zap', true, 'visit', 400.00, 'INR'),
+  ('painting', 'Painting & Finishing', 'Putty surface prep, sanding, primer barrier, and Asian Paints Royale luxury emulsion', 'Paintbrush', true, 'sqft', 18.00, 'INR'),
+  ('carpentry', 'Carpentry & Millwork', 'Marine plywood wardrobes, custom teak main doors, modular kitchen carcases & wood repair', 'Hammer', false, 'job', 650.00, 'INR'),
+  ('renovation', 'Renovation & Interiors', 'Complete apartment makeover, false ceilings, luxury modular kitchens & bathroom retrofits', 'Sparkles', true, 'sqft', 1200.00, 'INR'),
+  ('materials', 'Building Materials', 'Wholesale UltraTech cement, Tata Tiscon TMT steel rebar, M-Sand, gravel & Kajaria tiles', 'Truck', false, 'unit', 385.00, 'INR')
+on conflict (id) do update set
+  name = excluded.name,
+  description = excluded.description,
+  indicative_starting_price = excluded.indicative_starting_price,
+  currency = excluded.currency;
+

@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/health",
+      "destination": "/api/health"
+    },
+    {
+      "source": "/api/ai/interpret-scope",
+      "destination": "/api/ai/interpret-scope"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

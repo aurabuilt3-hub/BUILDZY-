@@ -1,7 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
+const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY)?.trim();
 
 // Check if valid credentials are provided (not empty and not the placeholder)
 const isConfigured = Boolean(
@@ -9,7 +9,8 @@ const isConfigured = Boolean(
   supabaseAnonKey &&
   supabaseUrl.startsWith('https://') &&
   !supabaseUrl.includes('your-project-id') &&
-  !supabaseAnonKey.includes('your-supabase-anon')
+  !supabaseAnonKey.includes('your-supabase-anon') &&
+  !supabaseAnonKey.includes('placeholder')
 );
 
 export const isSupabaseConfigured = isConfigured;

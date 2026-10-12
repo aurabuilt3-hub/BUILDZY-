@@ -1,6 +1,8 @@
 import type { QuantityEstimationInput, QuantityEstimationOutput } from '../../types/pricing';
 import indiaPricing from '../../data/india-pricing.json';
 
+export type { QuantityEstimationOutput };
+
 /**
  * Standard Indian residential construction quantity estimator based on CPWD norms:
  * - Cement: ~0.4 bags per sq. ft built-up area (Foundation, slab, brickwork, plastering)

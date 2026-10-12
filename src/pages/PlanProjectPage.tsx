@@ -13,6 +13,9 @@ import { useApp } from '../context/AppContext';
 import { formatINR, formatCompactINR } from '../lib/pricing/formatINR';
 import { CITIES, calculateConstructionEstimate } from '../lib/pricing/pricingEngine';
 import { calculateMaterialQuantities } from '../lib/pricing/quantityCalculator';
+import { calculateCriticalPathSchedule } from '../lib/pricing/schedulingEngine';
+import { aiEstimationService } from '../lib/pricing/aiEstimationService';
+import { estimationService } from '../services/estimationService';
 
 export const PlanProjectPage: React.FC = () => {
   const navigate = useNavigate();
@@ -81,8 +84,26 @@ export const PlanProjectPage: React.FC = () => {
     setStep(3);
   };
 
-  const handleGeneratePlan = () => {
+  const handleGeneratePlan = async () => {
     setIsGenerating(true);
+
+    // 1. Calculate deterministic CPM schedule
+    const scheduleForecast = calculateCriticalPathSchedule(builtUpArea);
+
+    // 2. Formulate AI complete estimation package
+    const completeResult = aiEstimationService.generateCompleteEstimate({
+      userPrompt: `${projectType} in ${location}`,
+      projectCity: selectedCityId,
+      estimatedAreaSqFt: builtUpArea,
+      qualityTier: mappedTier as any,
+    });
+
+    // 3. Save immutable estimate version
+    await estimationService.saveEstimateVersion(
+      completeResult,
+      'demo-customer-id'
+    );
+
     setTimeout(() => {
       setIsGenerating(false);
       const generated = {
@@ -91,8 +112,12 @@ export const PlanProjectPage: React.FC = () => {
         tier: selectedTier,
         budgetRange: `${formatCompactINR(budgetRangeMin)} - ${formatCompactINR(budgetRangeMax)}`,
         estimatedBudget,
-        timeline: `${timelineMonths} Months`,
+        timeline: `${scheduleForecast.totalMonthsEstimate} Months (${scheduleForecast.totalCalendarDays} Days)`,
         milestonesCount: 5,
+        curingDays: scheduleForecast.curingBufferDaysTotal,
+        criticalTasks: scheduleForecast.criticalPathTaskIds.length,
+        scheduleForecast,
+        completeResult,
       };
       setGeneratedPlan(generated);
       setDraftPlan({
@@ -101,14 +126,14 @@ export const PlanProjectPage: React.FC = () => {
         builtUpArea,
         floorCount,
         location,
-        timelineMonths,
+        timelineMonths: Math.round(scheduleForecast.totalMonthsEstimate),
         tier: selectedTier,
         estimatedBudget,
         budgetRangeMin,
         budgetRangeMax,
       });
       setStep(4);
-    }, 1000);
+    }, 700);
   };
 
   const handleCreateAndProceed = () => {
@@ -591,6 +616,62 @@ export const PlanProjectPage: React.FC = () => {
                 <span className="text-2xl font-black">{generatedPlan.budgetRange}</span>
               </div>
             </div>
+
+            {/* CPM Critical-Path Duration Prediction Card */}
+            {generatedPlan.scheduleForecast && (
+              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E3EAF4] shadow-soft">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200">
+                      CPM Critical-Path Duration Prediction
+                    </span>
+                    <h3 className="text-lg font-bold text-navy-900 mt-1">
+                      Construction Schedule & Sequential Task Network
+                    </h3>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs text-slate-400 block font-medium">Forecast Duration</span>
+                    <span className="text-sm font-black text-navy-900">
+                      {generatedPlan.scheduleForecast.totalCalendarDays} Calendar Days ({generatedPlan.scheduleForecast.totalWorkingDays} Working Days)
+                    </span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-5">
+                  <div className="p-3.5 rounded-2xl bg-[#F8FBFF] border border-[#E3EAF4]">
+                    <span className="text-slate-400 block font-medium">Critical Path Activities</span>
+                    <span className="text-base font-extrabold text-navy-900 mt-0.5 block">
+                      {generatedPlan.scheduleForecast.criticalPathTaskIds.length} Key Milestones
+                    </span>
+                    <span className="text-[10px] text-slate-500 block mt-0.5">Zero-float sequential path</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-[#F8FBFF] border border-[#E3EAF4]">
+                    <span className="text-slate-400 block font-medium">Mandatory Concrete Curing</span>
+                    <span className="text-base font-extrabold text-brand-700 mt-0.5 block">
+                      {generatedPlan.scheduleForecast.curingBufferDaysTotal} Total Days
+                    </span>
+                    <span className="text-[10px] text-slate-500 block mt-0.5">Slab ponding & plaster drying</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-[#F8FBFF] border border-[#E3EAF4]">
+                    <span className="text-slate-400 block font-medium">Schedule Confidence</span>
+                    <span className="text-base font-extrabold text-emerald-700 mt-0.5 block">
+                      {generatedPlan.scheduleForecast.confidence} Confidence
+                    </span>
+                    <span className="text-[10px] text-slate-500 block mt-0.5">Engine: {generatedPlan.scheduleForecast.version}</span>
+                  </div>
+                </div>
+
+                {/* Plain-Language Explanation */}
+                {generatedPlan.completeResult?.aiExplanation && (
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed mb-4">
+                    <strong className="text-navy-900 block mb-1">AI Scope & Budget Explanation:</strong>
+                    {generatedPlan.completeResult.aiExplanation}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* 5 Milestone Breakdown */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E3EAF4] shadow-soft">
