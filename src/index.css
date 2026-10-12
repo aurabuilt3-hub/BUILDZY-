@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-blue: #168BF5;
+    --accent-blue: #20B8F5;
+    --deep-navy: #101D3A;
+    --main-bg: #F5F9FF;
+    --card-bg: #FFFFFF;
+    --border-color: #E3EAF4;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #F5F9FF;
+    color: #101D3A;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-soft {
+    background: linear-gradient(135deg, #EAF4FF 0%, #F8FBFF 100%);
+  }
+  
+  .bg-gradient-hero {
+    background: radial-gradient(circle at 80% 20%, rgba(32, 184, 245, 0.12) 0%, rgba(22, 139, 245, 0.05) 50%, rgba(245, 249, 255, 0) 100%);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid #E3EAF4;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #168BF5 0%, #20B8F5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F5F9FF;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}

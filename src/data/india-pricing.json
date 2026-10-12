@@ -1,0 +1,710 @@
+{
+  "$schema": "synthetic_pan_india_pricing_v1",
+  "_comment": "Synthetic Pan-India construction & home services market rates based on standard CPWD and regional market references. For simulation/demo purposes.",
+  "meta": {
+    "version": "1.0.0",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "updatedAt": "2026-10-11",
+    "disclaimer": "Synthetic pricing dataset calibrated to average Indian residential construction & repair costs."
+  },
+  "cities": [
+    {
+      "id": "mumbai",
+      "name": "Mumbai",
+      "state": "Maharashtra",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.25,
+      "materialMultiplier": 1.15,
+      "overallMultiplier": 1.20,
+      "popular": true
+    },
+    {
+      "id": "delhi-ncr",
+      "name": "Delhi NCR",
+      "state": "Delhi / Haryana / UP",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.18,
+      "materialMultiplier": 1.12,
+      "overallMultiplier": 1.15,
+      "popular": true
+    },
+    {
+      "id": "bengaluru",
+      "name": "Bengaluru",
+      "state": "Karnataka",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.20,
+      "materialMultiplier": 1.14,
+      "overallMultiplier": 1.17,
+      "popular": true
+    },
+    {
+      "id": "hyderabad",
+      "name": "Hyderabad",
+      "state": "Telangana",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.12,
+      "materialMultiplier": 1.08,
+      "overallMultiplier": 1.10,
+      "popular": true
+    },
+    {
+      "id": "chennai",
+      "name": "Chennai",
+      "state": "Tamil Nadu",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.14,
+      "materialMultiplier": 1.10,
+      "overallMultiplier": 1.12,
+      "popular": true
+    },
+    {
+      "id": "pune",
+      "name": "Pune",
+      "state": "Maharashtra",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.12,
+      "materialMultiplier": 1.08,
+      "overallMultiplier": 1.10,
+      "popular": true
+    },
+    {
+      "id": "kolkata",
+      "name": "Kolkata",
+      "state": "West Bengal",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 0.95,
+      "materialMultiplier": 1.02,
+      "overallMultiplier": 0.98,
+      "popular": true
+    },
+    {
+      "id": "ahmedabad",
+      "name": "Ahmedabad",
+      "state": "Gujarat",
+      "regionTier": "Tier 1",
+      "labourMultiplier": 1.05,
+      "materialMultiplier": 1.02,
+      "overallMultiplier": 1.03,
+      "popular": true
+    },
+    {
+      "id": "jaipur",
+      "name": "Jaipur",
+      "state": "Rajasthan",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.92,
+      "materialMultiplier": 0.96,
+      "overallMultiplier": 0.94,
+      "popular": true
+    },
+    {
+      "id": "chandigarh",
+      "name": "Chandigarh",
+      "state": "Punjab / Haryana",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.08,
+      "materialMultiplier": 1.05,
+      "overallMultiplier": 1.06,
+      "popular": true
+    },
+    {
+      "id": "lucknow",
+      "name": "Lucknow",
+      "state": "Uttar Pradesh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.90,
+      "materialMultiplier": 0.95,
+      "overallMultiplier": 0.92,
+      "popular": true
+    },
+    {
+      "id": "kochi",
+      "name": "Kochi",
+      "state": "Kerala",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.22,
+      "materialMultiplier": 1.10,
+      "overallMultiplier": 1.15,
+      "popular": true
+    },
+    {
+      "id": "indore",
+      "name": "Indore",
+      "state": "Madhya Pradesh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.90,
+      "materialMultiplier": 0.94,
+      "overallMultiplier": 0.92
+    },
+    {
+      "id": "coimbatore",
+      "name": "Coimbatore",
+      "state": "Tamil Nadu",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.04,
+      "materialMultiplier": 1.02,
+      "overallMultiplier": 1.03
+    },
+    {
+      "id": "nagpur",
+      "name": "Nagpur",
+      "state": "Maharashtra",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.92,
+      "materialMultiplier": 0.96,
+      "overallMultiplier": 0.94
+    },
+    {
+      "id": "surat",
+      "name": "Surat",
+      "state": "Gujarat",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.02,
+      "materialMultiplier": 1.01,
+      "overallMultiplier": 1.01
+    },
+    {
+      "id": "patna",
+      "name": "Patna",
+      "state": "Bihar",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.85,
+      "materialMultiplier": 0.98,
+      "overallMultiplier": 0.91
+    },
+    {
+      "id": "bhopal",
+      "name": "Bhopal",
+      "state": "Madhya Pradesh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.88,
+      "materialMultiplier": 0.94,
+      "overallMultiplier": 0.91
+    },
+    {
+      "id": "visakhapatnam",
+      "name": "Visakhapatnam",
+      "state": "Andhra Pradesh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.96,
+      "materialMultiplier": 0.98,
+      "overallMultiplier": 0.97
+    },
+    {
+      "id": "vadodara",
+      "name": "Vadodara",
+      "state": "Gujarat",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.98,
+      "materialMultiplier": 0.99,
+      "overallMultiplier": 0.98
+    },
+    {
+      "id": "ludhiana",
+      "name": "Ludhiana",
+      "state": "Punjab",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.02,
+      "materialMultiplier": 1.01,
+      "overallMultiplier": 1.01
+    },
+    {
+      "id": "bhubaneswar",
+      "name": "Bhubaneswar",
+      "state": "Odisha",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.88,
+      "materialMultiplier": 0.95,
+      "overallMultiplier": 0.91
+    },
+    {
+      "id": "varanasi",
+      "name": "Varanasi",
+      "state": "Uttar Pradesh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.86,
+      "materialMultiplier": 0.94,
+      "overallMultiplier": 0.90
+    },
+    {
+      "id": "guwahati",
+      "name": "Guwahati",
+      "state": "Assam",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.98,
+      "materialMultiplier": 1.10,
+      "overallMultiplier": 1.04
+    },
+    {
+      "id": "mysuru",
+      "name": "Mysuru",
+      "state": "Karnataka",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.02,
+      "materialMultiplier": 1.02,
+      "overallMultiplier": 1.02
+    },
+    {
+      "id": "dehradun",
+      "name": "Dehradun",
+      "state": "Uttarakhand",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.04,
+      "materialMultiplier": 1.06,
+      "overallMultiplier": 1.05
+    },
+    {
+      "id": "ranchi",
+      "name": "Ranchi",
+      "state": "Jharkhand",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.86,
+      "materialMultiplier": 0.96,
+      "overallMultiplier": 0.91
+    },
+    {
+      "id": "raipur",
+      "name": "Raipur",
+      "state": "Chhattisgarh",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 0.88,
+      "materialMultiplier": 0.95,
+      "overallMultiplier": 0.91
+    },
+    {
+      "id": "goa",
+      "name": "Goa (Panaji)",
+      "state": "Goa",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.18,
+      "materialMultiplier": 1.12,
+      "overallMultiplier": 1.15
+    },
+    {
+      "id": "thiruvananthapuram",
+      "name": "Thiruvananthapuram",
+      "state": "Kerala",
+      "regionTier": "Tier 2",
+      "labourMultiplier": 1.20,
+      "materialMultiplier": 1.10,
+      "overallMultiplier": 1.14
+    }
+  ],
+  "constructionTiers": [
+    {
+      "tier": "Basic",
+      "name": "Basic / Essential Standard",
+      "tagline": "Cost-effective, structurally sound construction using dependable standard materials.",
+      "baseRatePerSqFt": 1550,
+      "idealFor": "Budget homes, rental floors, farm storeys & cost-optimized residential builds.",
+      "specifications": {
+        "structure": "Standard RCC frame (M20 grade), standard country bricks or solid concrete blocks",
+        "flooring": "Vitrified tiles up to ₹50/sq.ft (600x600mm) or ceramic flooring",
+        "doorsWindows": "Sal wood frame with flush doors, standard powder-coated aluminum sliding windows",
+        "electrical": "Concealed ISI copper wiring (Anchor / Polycab) with standard modular switches",
+        "plumbingSanitary": "CPVC / PVC pipelines with Parryware / Cera basic white sanitary fittings",
+        "painting": "Tractor emulsion interior (2 coats over putty), Ace exterior weather-proof finish",
+        "kitchen": "Polished granite counter (18mm) with stainless steel sink & ceramic tiles up to 2 ft"
+      },
+      "sampleBrands": ["UltraTech Cement", "Kamdhenu Steel", "Cera", "Anchor", "Asian Paints Tractor"],
+      "warrantyYears": 5
+    },
+    {
+      "tier": "Standard",
+      "name": "Standard / Balanced Living",
+      "tagline": "The sweet spot of modern durability, branded fittings, and contemporary design.",
+      "baseRatePerSqFt": 2150,
+      "idealFor": "Modern family villas, independent duplexes & long-term personal living homes.",
+      "specifications": {
+        "structure": "Fe-500D / 550D TMT steel with M25 mix design, red clay table-molded bricks / AAC blocks",
+        "flooring": "Premium double-charged vitrified tiles up to ₹85/sq.ft (800x800mm or 600x1200mm)",
+        "doorsWindows": "Teak wood main door frame with veneered shutter, UPVC casement windows with mesh",
+        "electrical": "Fire-retardant Havells / Finolex wiring, Legrand / Schneider modular switches",
+        "plumbingSanitary": "Astral CPVC, Jaquar / Hindware contemporary quarter-turn CP fittings and wall-hung EWCs",
+        "painting": "Asian Paints Apcolite / Royale Luxury emulsion, Apex Ultima exterior anti-algal finish",
+        "kitchen": "Black galaxy granite slab, Carysil quartz / Franke sink, 4ft designer wall dado"
+      },
+      "sampleBrands": ["Tata Tiscon", "UltraTech Super", "Jaquar", "Legrand", "Asian Paints Royale", "Kajaria"],
+      "warrantyYears": 10
+    },
+    {
+      "tier": "Premium",
+      "name": "Premium / Executive Luxury",
+      "tagline": "High-end architectural finishes, smart home provisions, and designer finishes.",
+      "baseRatePerSqFt": 3150,
+      "idealFor": "Luxury villas, premium duplex residences & modern architect-curated homes.",
+      "specifications": {
+        "structure": "Fe-550D primary steel (Tata Tiscon / JSW Neosteel) with ready-mix concrete M25/M30",
+        "flooring": "Large format glazed vitrified tiles up to ₹140/sq.ft (800x1600mm) or Italian composite marble",
+        "doorsWindows": "Complete seasoned teak wood frames & designer doors, Fenesta / Schuco acoustic UPVC systems",
+        "electrical": "Smart home automated conduit wiring, Schneider Zencelo / Crabtree automation-ready switches",
+        "plumbingSanitary": "Kohler / Grohe thermostatic diverters, concealed wall tanks, premium vanity counters",
+        "painting": "Asian Paints Royale Aspira / PU paint finish on woodwork, Silicon-based weather armor exterior",
+        "kitchen": "Engineered quartz / nano-white countertop with chimney ducting and soft-close modular provisions"
+      },
+      "sampleBrands": ["Tata Tiscon Fe-550D", "ACC Concrete+", "Kohler", "Schneider Electric", "Asian Paints Aspira", "Fenesta"],
+      "warrantyYears": 15
+    },
+    {
+      "tier": "Luxury",
+      "name": "Ultra Luxury / Bespoke Estate",
+      "tagline": "Uncompromising bespoke craftsmanship, structural acoustics, and imported luxury finishes.",
+      "baseRatePerSqFt": 4500,
+      "idealFor": "Palatial bungalows, bespoke farmhouses & customized architectural masterworks.",
+      "specifications": {
+        "structure": "Heavy seismic-resistant post-tensioned RCC, AAC thermal envelope, double insulation damp-proofing",
+        "flooring": "Imported Italian Botticino / Statuario marble or engineered oak hardwood flooring",
+        "doorsWindows": "Bespoke solid Burma teak doors, triple-glazed thermally-broken German aluminum systems",
+        "electrical": "Complete Lutron / KNX centralized home automation, dedicated solar micro-inverter wiring",
+        "plumbingSanitary": "Hansgrohe Axor / Toto sensor sanitary suites, pressurized multi-stage RO ring main",
+        "painting": "Stucco / lime plaster textured artisanal interiors, hydrophobic self-cleaning facade coatings",
+        "kitchen": "Full island imported German modular cabinetry provision with Dekton ultra-compact worktops"
+      },
+      "sampleBrands": ["JSW Neosteel", "UltraTech WeatherPro", "Toto", "Lutron", "Hansgrohe", "Schuco"],
+      "warrantyYears": 20
+    }
+  ],
+  "materials": [
+    {
+      "id": "mat-cement-53",
+      "name": "OPC 53 Grade Cement (50kg Bag)",
+      "category": "Cement",
+      "standardUnit": "bag (50kg)",
+      "baseRateINR": 385,
+      "hsnCode": "2523",
+      "gstRate": 0.28,
+      "commonBrands": ["UltraTech", "ACC", "Ambuja", "Shree Cement"],
+      "notes": "Structural columns, beams, slab casting"
+    },
+    {
+      "id": "mat-cement-ppc",
+      "name": "PPC Fly-ash Cement (50kg Bag)",
+      "category": "Cement",
+      "standardUnit": "bag (50kg)",
+      "baseRateINR": 360,
+      "hsnCode": "2523",
+      "gstRate": 0.28,
+      "commonBrands": ["UltraTech Super", "Birla Gold", "Dalmia"],
+      "notes": "Brick masonry, wall plastering & flooring base"
+    },
+    {
+      "id": "mat-steel-tmt",
+      "name": "Fe-500D / 550D TMT Rebar Steel",
+      "category": "Steel",
+      "standardUnit": "kg",
+      "baseRateINR": 68,
+      "hsnCode": "7214",
+      "gstRate": 0.18,
+      "commonBrands": ["Tata Tiscon", "JSW Neosteel", "Jindal Panther", "Sail"],
+      "notes": "High yield strength reinforcement for foundation & RCC"
+    },
+    {
+      "id": "mat-m-sand",
+      "name": "Manufactured Sand (M-Sand) for Concrete",
+      "category": "Sand",
+      "standardUnit": "cubic foot (cft)",
+      "baseRateINR": 55,
+      "hsnCode": "2505",
+      "gstRate": 0.05,
+      "commonBrands": ["Local Quarry Certified"],
+      "notes": "Washed, zone-II graded sand for structural mix"
+    },
+    {
+      "id": "mat-p-sand",
+      "name": "Plastering Sand (P-Sand) Fine Mesh",
+      "category": "Sand",
+      "standardUnit": "cubic foot (cft)",
+      "baseRateINR": 62,
+      "hsnCode": "2505",
+      "gstRate": 0.05,
+      "commonBrands": ["Local Quarry Certified"],
+      "notes": "Fine silt-free sand for smooth plaster finishes"
+    },
+    {
+      "id": "mat-aggregate-20mm",
+      "name": "Coarse Blue Metal Aggregate (20mm)",
+      "category": "Aggregate",
+      "standardUnit": "cubic foot (cft)",
+      "baseRateINR": 48,
+      "hsnCode": "2517",
+      "gstRate": 0.05,
+      "commonBrands": ["Crushed Granite"],
+      "notes": "Standard concrete foundation, footing & slab gravel"
+    },
+    {
+      "id": "mat-red-bricks",
+      "name": "Table-Molded Red Clay Bricks (First Class)",
+      "category": "Bricks",
+      "standardUnit": "piece",
+      "baseRateINR": 9.5,
+      "hsnCode": "6901",
+      "gstRate": 0.12,
+      "commonBrands": ["Kiln Fired Class 1"],
+      "notes": "Load bearing and partition walls"
+    },
+    {
+      "id": "mat-aac-blocks",
+      "name": "AAC Lightweight Aerated Concrete Blocks (4 inch / 6 inch)",
+      "category": "Bricks",
+      "standardUnit": "piece",
+      "baseRateINR": 58,
+      "hsnCode": "6810",
+      "gstRate": 0.18,
+      "commonBrands": ["Siporex", "Magicrete", "Aerocon"],
+      "notes": "Lightweight, thermal insulation, fast wall laying"
+    },
+    {
+      "id": "mat-vitrified-tiles",
+      "name": "Glazed Vitrified Floor Tiles (GVT 2x4 ft)",
+      "category": "Tiles",
+      "standardUnit": "sq. ft",
+      "baseRateINR": 75,
+      "hsnCode": "6907",
+      "gstRate": 0.18,
+      "commonBrands": ["Kajaria", "Somany", "Nitco", "Orientbell"],
+      "notes": "Double charged or glazed vitrified for main areas"
+    },
+    {
+      "id": "mat-interior-paint",
+      "name": "Interior Acrylic Emulsion Paint",
+      "category": "Paint",
+      "standardUnit": "liter",
+      "baseRateINR": 320,
+      "hsnCode": "3209",
+      "gstRate": 0.18,
+      "commonBrands": ["Asian Paints Royale", "Berger Silk", "Dulux Velvet"],
+      "notes": "Washable high sheen / soft matte interior walls"
+    },
+    {
+      "id": "mat-exterior-paint",
+      "name": "Weather-proof Exterior Emulsion",
+      "category": "Paint",
+      "standardUnit": "liter",
+      "baseRateINR": 390,
+      "hsnCode": "3209",
+      "gstRate": 0.18,
+      "commonBrands": ["Asian Paints Apex Ultima", "Berger WeatherCoat"],
+      "notes": "Anti-algal silicone enriched facade finish"
+    }
+  ],
+  "labour": [
+    {
+      "id": "lab-mason-skilled",
+      "role": "Master Mason (Raj Mistry)",
+      "category": "Civil",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 950,
+      "hourlyRateINR": 140,
+      "crewRecommendation": "1 Raj Mistry per 2 helpers for brickwork / plaster"
+    },
+    {
+      "id": "lab-helper-civil",
+      "role": "Civil Helper / Labour (Beldar)",
+      "category": "Civil",
+      "skillLevel": "Unskilled",
+      "dailyRateINR": 550,
+      "hourlyRateINR": 85,
+      "crewRecommendation": "Material transport, mortar mixing, curing"
+    },
+    {
+      "id": "lab-electrician-licensed",
+      "role": "Certified Electrician",
+      "category": "MEP",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 900,
+      "hourlyRateINR": 150,
+      "crewRecommendation": "Conduit laying, DB termination, switchboard dressing"
+    },
+    {
+      "id": "lab-plumber-skilled",
+      "role": "Master Plumber",
+      "category": "MEP",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 900,
+      "hourlyRateINR": 150,
+      "crewRecommendation": "CPVC line runs, pressure testing, sanitary fixture installation"
+    },
+    {
+      "id": "lab-carpenter-master",
+      "role": "Senior Modular Carpenter",
+      "category": "Finishing",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 1050,
+      "hourlyRateINR": 160,
+      "crewRecommendation": "Door frame fixing, modular kitchens, wardrobe carcase"
+    },
+    {
+      "id": "lab-painter-skilled",
+      "role": "Master Painter",
+      "category": "Finishing",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 850,
+      "hourlyRateINR": 130,
+      "crewRecommendation": "Putty troweling, machine sanding, spray & roller coats"
+    },
+    {
+      "id": "lab-tile-layer",
+      "role": "Precision Tile Layer (Mistri)",
+      "category": "Finishing",
+      "skillLevel": "Skilled",
+      "dailyRateINR": 950,
+      "hourlyRateINR": 145,
+      "crewRecommendation": "Laser leveling, spacer leveling, epoxy grouting"
+    },
+    {
+      "id": "lab-bar-bender",
+      "role": "Steel Reinforcement / Bar Bender",
+      "category": "Civil",
+      "skillLevel": "Semi-Skilled",
+      "dailyRateINR": 850,
+      "hourlyRateINR": 130,
+      "crewRecommendation": "Column stirrups, slab reinforcement tying"
+    }
+  ],
+  "sampleContractorBids": [
+    {
+      "id": "bid-basic-01",
+      "contractorId": "pro-3",
+      "contractorName": "Sunrise BuildTech & Renovations",
+      "tier": "Basic",
+      "builtUpAreaSqFt": 2400,
+      "baseRatePerSqFt": 1550,
+      "totalEstimateINR": 3720000,
+      "scopeItems": [
+        "Complete excavation & isolated footing foundation (depth up to 5 ft)",
+        "RCC columns & beams using standard Fe-500 grade TMT steel",
+        "Red clay brick / solid concrete masonry walls with 1:6 cement mortar",
+        "Single coat internal plaster (12mm) & external sponge plaster (18mm)",
+        "Standard vitrified flooring (600x600mm) up to ₹50/sq.ft allowance",
+        "Concealed Anchor / Finolex electrical conduits with standard switches",
+        "Parryware white sanitary fixtures and basic brass chrome taps",
+        "Tractor emulsion interior paint (2 coats over 1 coat primer)",
+        "12 months post-handover seepage and leakage repair guarantee"
+      ],
+      "exclusionItems": [
+        "Municipal corporation building plan sanction & scrutiny fee",
+        "Temporary construction electrical meter and permanent EB transformer charges",
+        "Borewell drilling, submersible pump and underground sump beyond 6,000L",
+        "Compound wall beyond front gate and decorative landscaping",
+        "Interior false ceiling and modular wardrobe cabinetry"
+      ],
+      "paymentMilestones": [
+        { "stage": "Booking & Soil Plan Approval", "percentage": 10, "amountINR": 372000, "description": "Mobilization advance & architectural working drawings" },
+        { "stage": "Foundation & Plinth Beam Completion", "percentage": 15, "amountINR": 558000, "description": "Excavation, PCC, footings, plinth beam and backfilling" },
+        { "stage": "Ground Floor RCC Slab Casting", "percentage": 20, "amountINR": 744000, "description": "Column shuttering, rebar reinforcement and slab casting" },
+        { "stage": "First Floor RCC Slab Casting", "percentage": 15, "amountINR": 558000, "description": "Upper floor column casting and roof slab concrete" },
+        { "stage": "Brick Masonry & Conduit Grooving", "percentage": 15, "amountINR": 558000, "description": "External/internal wall laying, electrical & plumbing concealed runs" },
+        { "stage": "Plastering & Flooring Tiles Laying", "percentage": 15, "amountINR": 558000, "description": "Internal smooth plaster, external sand-face and tile fixing" },
+        { "stage": "Painting & Final Handover with Key Handover", "percentage": 10, "amountINR": 372000, "description": "Final finish coats, sanitary fittings testing, deep clean handover" }
+      ],
+      "materialBrands": [
+        { "category": "Cement", "brand": "UltraTech / ACC PPC", "grade": "Standard 50kg bags" },
+        { "category": "Steel", "brand": "Kamdhenu / Jindal TMT", "grade": "Fe-500D ISI" },
+        { "category": "Sanitary", "brand": "Parryware / Cera", "grade": "Standard White Series" },
+        { "category": "Wires & Switches", "brand": "Anchor / Polycab", "grade": "FR Copper & Roma Series" },
+        { "category": "Paints", "brand": "Asian Paints", "grade": "Tractor Emulsion & Ace Exterior" }
+      ],
+      "contingencyPercent": 5,
+      "statutoryGstPercent": 18,
+      "durationMonths": 7,
+      "warrantyYears": 5
+    },
+    {
+      "id": "bid-standard-02",
+      "contractorId": "pro-2",
+      "contractorName": "Vanguard Structural & Works",
+      "tier": "Standard",
+      "builtUpAreaSqFt": 2400,
+      "baseRatePerSqFt": 2150,
+      "totalEstimateINR": 5160000,
+      "scopeItems": [
+        "Soil bearing capacity testing, seismic Zone-III structural design certification",
+        "RCC column/beam frame using Tata Tiscon / JSW Neosteel Fe-500D rebar",
+        "Table-molded kiln red bricks with chicken-mesh joint crack prevention",
+        "Double coat internal putty with laser-flat smooth finish",
+        "Premium Kajaria double-charged vitrified tiles (800x800mm) up to ₹85/sq.ft",
+        "Teak wood main entrance door with brass mortise lock & video doorbell provision",
+        "UPVC sliding windows with 5mm toughened Saint-Gobain glass and bug screens",
+        "Complete Jaquar quarter-turn CP fittings with 10-year manufacturer warranty",
+        "Astral CPVC/SWR concealed piping with ultrasonic leak testing",
+        "Asian Paints Royale Luxury interior & Apex Ultima weatherproof exterior",
+        "10-year comprehensive structural stability and anti-termite guarantee"
+      ],
+      "exclusionItems": [
+        "Government municipal development charges & water connection meter deposit",
+        "Modular kitchen cabinet woodworking (carcase & shutters)",
+        "Swimming pool / jacuzzi installations",
+        "Decorative crystal chandeliers and smart ambient LED cove profiles"
+      ],
+      "paymentMilestones": [
+        { "stage": "Booking & Structural Design Approval", "percentage": 10, "amountINR": 516000, "description": "Structural 3D model, soil test & municipal compliance blueprint" },
+        { "stage": "Substructure & Plinth Beam Level", "percentage": 15, "amountINR": 774000, "description": "Anti-termite soil treatment, column footings, RCC plinth beam" },
+        { "stage": "Ground Floor Roof Slab Cast", "percentage": 20, "amountINR": 1032000, "description": "Columns, lintels, formwork and M25 design slab cast" },
+        { "stage": "First Floor Roof Slab Cast", "percentage": 15, "amountINR": 774000, "description": "Upper floor structural slab and parapet wall completion" },
+        { "stage": "Brick Masonry & Electrical/Plumbing Conduiting", "percentage": 15, "amountINR": 774000, "description": "Wall erection, concealed pipe runs with pressure gauge verification" },
+        { "stage": "Plastering, Waterproofing & Vitrified Flooring", "percentage": 15, "amountINR": 774000, "description": "Bathroom polymer waterproofing, tile laying with leveling spacers" },
+        { "stage": "Royale Painting, Fixtures Dressing & Possession", "percentage": 10, "amountINR": 516000, "description": "Two coats Royale Emulsion, CP fixtures, pre-possession audit" }
+      ],
+      "materialBrands": [
+        { "category": "Cement", "brand": "UltraTech Super / Ambuja", "grade": "OPC 53 & PPC Super" },
+        { "category": "Steel", "brand": "Tata Tiscon / JSW Neosteel", "grade": "Fe-500D Primary Billet" },
+        { "category": "Sanitary & CP", "brand": "Jaquar / Hindware Italian", "grade": "Alive / Florentine Chrome" },
+        { "category": "Wires & Switches", "brand": "Finolex / Havells", "grade": "FR-LSH & Crabtree / Legrand" },
+        { "category": "Paints", "brand": "Asian Paints", "grade": "Royale Luxury & Apex Ultima" }
+      ],
+      "contingencyPercent": 5,
+      "statutoryGstPercent": 18,
+      "durationMonths": 8,
+      "warrantyYears": 10
+    },
+    {
+      "id": "bid-premium-03",
+      "contractorId": "pro-1",
+      "contractorName": "Apex Heritage Builders",
+      "tier": "Premium",
+      "builtUpAreaSqFt": 2400,
+      "baseRatePerSqFt": 3150,
+      "totalEstimateINR": 7560000,
+      "scopeItems": [
+        "Comprehensive architectural blueprinting, 3D photoreal elevations & structural certification",
+        "Heavy-duty RCC frame using Tata Tiscon Fe-550D primary steel with M25/M30 ready mix concrete",
+        "Double-layer damp proof course (DPC) and Dr. Fixit chemical integral waterproofing across all slabs",
+        "Large-format Italian composite vitrified tiles (800x1600mm) or marble flooring allowance ₹140/sq.ft",
+        "Imported seasoned Burma teak main entrance door (8ft height) with digital biometric access",
+        "Acoustic double-glazed German UPVC / Schuco aluminum window systems with SS mosquito mesh",
+        "Complete Kohler / Grohe thermostatic shower fixtures and wall-hung sensor rimless EWCs",
+        "Concealed copper piping for VRV / split ACs, home theater surround conduits & EV charger line",
+        "Asian Paints Royale Aspira antibacterial luxury interior walls & PU finish on wood surfaces",
+        "Dedicated senior civil engineer stationed full-time on site with weekly drone progress telemetry",
+        "15-year structural warranty with biometric escrow milestone inspection certificate"
+      ],
+      "exclusionItems": [
+        "Town planning municipal statutory sanction fees and power grid solar net-metering charges",
+        "Custom imported Italian loose furniture and decorative soft furnishings",
+        "Landscaping garden terrace gazebos and exterior swimming pool heating plant"
+      ],
+      "paymentMilestones": [
+        { "stage": "Architectural Design & Contract Signing", "percentage": 10, "amountINR": 756000, "description": "3D architectural walkthrough, MEP drawings, site topography survey" },
+        { "stage": "Substructure, Raft Foundation & Anti-Termite", "percentage": 15, "amountINR": 1134000, "description": "Sub-surface injection, RCC raft/footing, heavy plinth beam" },
+        { "stage": "Ground Floor Superstructure Slab Casting", "percentage": 20, "amountINR": 1512000, "description": "Primary Fe-550D reinforcement, M30 concrete, cube test reports" },
+        { "stage": "First Floor & Headroom Superstructure Slab", "percentage": 15, "amountINR": 1134000, "description": "Upper floor cantilevered architectural framing and slab curing" },
+        { "stage": "Thermal AAC Blockwork, VRV & MEP Conduiting", "percentage": 15, "amountINR": 1134000, "description": "Precision blockwork, VRV copper runs, smart home automation feeds" },
+        { "stage": "Multi-layer Waterproofing, Marble / GVT Flooring", "percentage": 15, "amountINR": 1134000, "description": "3-layer crystalline waterproofing, 800x1600mm tiles with epoxy joints" },
+        { "stage": "Royale Aspira Painting, Kohler Fittings & Handover", "percentage": 10, "amountINR": 756000, "description": "Aspira finish, Kohler brassware dressing, deep sanitization handover" }
+      ],
+      "materialBrands": [
+        { "category": "Cement", "brand": "UltraTech WeatherPro / ACC Concrete+", "grade": "High Early Strength 53" },
+        { "category": "Steel", "brand": "Tata Tiscon Superlinks Fe-550D", "grade": "Primary 100% Virgin Steel" },
+        { "category": "Sanitary & CP", "brand": "Kohler / Grohe", "grade": "Modern Luxury Diverters" },
+        { "category": "Wires & Switches", "brand": "Schneider Zencelo / Legrand Arteor", "grade": "Smart Modular Automation" },
+        { "category": "Paints", "brand": "Asian Paints Royale Aspira", "grade": "Ultra-Luxury Antibacterial Sheen" }
+      ],
+      "contingencyPercent": 5,
+      "statutoryGstPercent": 18,
+      "durationMonths": 8,
+      "warrantyYears": 15
+    }
+  ]
+}
